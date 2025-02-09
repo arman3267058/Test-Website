@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Protected Content</title>
+    <script src="https://cdn.auth0.com/js/auth0/9.19/auth0.min.js"></script>
+    <script>
+        var auth0 = new auth0.WebAuth({
+            domain: "dev-do81lk71uutw7g26.us.auth0.com",
+            clientID: "xKMcyOqFI7remdCjasynFbkr1OqaDA2g",
+            redirectUri: "https://sites.google.com/view/text00134/home",
+            responseType: "token id_token",
+            scope: "openid profile email"
+        });
+
+        function checkLogin() {
+            auth0.checkSession({}, function(err, authResult) {
+                if (err) {
+                    window.location.href = "https://dev-do81lk71uutw7g26.us.auth0.com/login?client=YOUR_CLIENT_ID&redirect_uri=YOUR_PAGE_URL";
+                } else {
+                    document.getElementById("content").style.display = "block";
+                }
+            });
+        }
+    </script>
+</head>
+<body onload="checkLogin()">
+    <h1>Welcome to the Protected Page</h1>
+    <div id="content" style="display: none;">
+        <p>এই কনটেন্ট শুধুমাত্র লগইন করা ইউজারদের জন্য। 🎉</p>
+    </div>
+</body>
+</html>
