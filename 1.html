@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Google Login</title>
+</head>
+<body>
+    <h2>Sign in with Google</h2>
+    <button id="google-sign-in-btn">Google Sign-In</button>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
+    <!-- Your Firebase Configuration -->
+    <script>
+        const firebaseConfig = {
+          apiKey: "AIzaSyArk21iJ8dQGbTh_g0F5bTjG00P0guyLdU",
+          authDomain: "my-login-page-1538a.firebaseapp.com",
+          projectId: "my-login-page-1538a",
+          storageBucket: "my-login-page-1538a.firebasestorage.app",
+          messagingSenderId: "498109307189",
+          appId: "1:498109307189:web:3b8a12e09242e4efd7d47c"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Google Sign-In function
+        const googleSignInButton = document.getElementById('google-sign-in-btn');
+        
+        googleSignInButton.addEventListener('click', () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    const user = result.user;
+                    console.log("User Info: ", user);
+                    alert("Welcome, " + user.displayName);
+                    // Redirect to a new page or show user data
+                    window.location.href = "welcome.html"; // Example: Redirecting to a welcome page
+                })
+                .catch((error) => {
+                    console.error("Error: ", error.message);
+                    alert("Error: " + error.message);
+                });
+        });
+
+        // Check user status
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                console.log("Logged in as: ", user.displayName);
+            } else {
+                console.log("No user is logged in.");
+            }
+        });
+    </script>
+</body>
+</html>
